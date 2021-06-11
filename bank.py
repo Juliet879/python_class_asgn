@@ -99,7 +99,7 @@ class Account:
             return f"You have fully settled your loan, account balance is {self.balance}"
 
         
-    def transfer(self,transfer_amount,acc):
+    def transfer(self,transfer_amount,account):
 
         try:
             transfer_amount + 10
@@ -117,8 +117,8 @@ class Account:
 
         else:
             self.balance -= total
-            acc.deposit(transfer_amount)
-            return f"You have succesfully transfered {transfer_amount} to {acc.name},current account balance is {self.balance}"
+            account.deposit(transfer_amount)
+            return f"You have succesfully transfered {transfer_amount} to {account.name},current account balance is {self.balance}"
 
 
 
@@ -154,6 +154,23 @@ class MobileMoneyAccount(Account):
             self.balance -= amount
             transaction = {"amount":amount,"narration":"Bought Airtime","balance":self.balance,"time":dt.now()}
             self.transactions.append(transaction)
-            return f"You have successfully bought airtime of {amount} account balance is {self.balance}" 
+            return f"Confirmed,you have successfully bought airtime of {amount} account balance is {self.balance}" 
           
+    def buy_someone_airtime(self,amount,account):
+        try:
+            amount + 10
+        except TypeError:
+            return "Please enter a valid amount"
 
+        if amount < 0:
+            return "Please enter a valid amount"
+
+        elif amount > self.balance:
+            return "Insufficient balance"
+
+        else:
+            self.balance -= amount
+            account.buy_airtime(amount)
+            transaction = {"amount":amount,"narration":f"Bought Airtime for  {account.name}","balance":self.balance,"time":dt.now()}
+            self.transactions.append(transaction)
+            return f"You have bought airtime for {account.name} account balance is {self.balance}"

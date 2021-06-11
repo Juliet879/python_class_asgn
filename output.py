@@ -5,8 +5,11 @@
 from bank import MobileMoneyAccount
 
 user = MobileMoneyAccount(name = "Juliet", phone = "7896356",service_provider="Safaricom")
+user2 = MobileMoneyAccount(name = "Sindet", phone = "23554",service_provider="Safaricom")
+
 print(user.deposit(500))
 print(user.buy_airtime(50))
+print(user.buy_someone_airtime(30,user2))
 user.get_statement()
 
 
